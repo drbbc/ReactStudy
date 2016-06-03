@@ -1,46 +1,95 @@
+/**
+ * The examples provided by Facebook are for non-commercial testing and
+ * evaluation purposes only.
+ *
+ * Facebook reserves all rights not expressly granted.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NON INFRINGEMENT. IN NO EVENT SHALL
+ * FACEBOOK BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN
+ * AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+ * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
 'use strict';
-import React, { Component } from 'react';
-import Util from  '../tools/utils';
-import {StyleSheet,View,StatusBar,NavigatorIOS} from 'react-native';
 
-export default class extends Component{
+var React = require('react');
+var ReactNative = require('react-native');
+var {
+  NavigatorIOS,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View
+} = ReactNative;
 
-  componentDidMount() {
-    StatusBar.setBarStyle(0);
-  }
+var Util = require('../tools/utils');
 
-  componentWillMount(){
-    if (this.props.initView===null) {
+var EmptyPage = React.createClass({
 
-    }
-  }
-
-  render(){
-    const initView = this.props.initView?this.props.initView:<View style={styles.container}></View>;
+  render: function() {
     return (
-        <NavigatorIOS
-          ref='nav'
-          style={styles.container1}
-          initialRoute={{
-            title:"30 Days of RN",
-            component: initView,
-            backButtonTitle: 'back',
-            shadowHidden: false,
-            translucent:false,
-            barTintColor:'#fff',
-            titleTextColor:'#000000'
-          }}
-          itemWrapperStyle={styles.itemWrapper}
-          tintColor="#777"
-        />
+      <View style={styles.emptyPage}>
+        <Text style={styles.emptyPageText}>
+          {this.props.text}
+        </Text>
+      </View>
     );
-  }
-}
+  },
 
-const styles = StyleSheet.create({
-  container:{
-    width:Util.size.width,
-    height:Util.size.height,
-    backgroundColor:'rgb(0,123,345)',
-  }
 });
+
+var NavigatorIOSColors = React.createClass({
+
+  statics: {
+    title: '<NavigatorIOS> - Custom',
+    description: 'iOS navigation with custom nav bar colors',
+  },
+
+  render: function() {
+    // Set StatusBar with light contents to get better contrast
+    StatusBar.setBarStyle('light-content');
+
+    return (
+      <NavigatorIOS
+        style={styles.container}
+        initialRoute={{
+          component: this.props.component,
+          title: '标题啥的',
+          rightButtonTitle: 'Done',
+          onRightButtonPress: () => {
+            StatusBar.setBarStyle('default');
+          },
+          passProps: {
+            text: 'The nav bar has custom colors with tintColor, ' +
+              'barTintColor and titleTextColor props.',
+          },
+        }}
+        tintColor="#FFFFFF"
+        barTintColor='rgb(102,176,50)'
+        titleTextColor="#FFFFFF"
+        translucent={false}
+        shadowHidden={true}
+      />
+    );
+  },
+
+});
+
+var styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  emptyPage: {
+    flex: 1,
+    backgroundColor:'rgb(120,55,210)',
+    marginTop: 64,
+  },
+  emptyPageText: {
+    margin: 10,
+  },
+});
+
+NavigatorIOSColors.external = true;
+
+module.exports = NavigatorIOSColors;

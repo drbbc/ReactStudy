@@ -5,38 +5,69 @@
  */
 
 import React, { Component } from 'react';
+import Util from './tools/utils';
+
 import {
   AppRegistry,
   StyleSheet,
+  NavigatorIOS,
+  StatusBar,
+  TabBarIOS,
+  ScrollView,
+  TouchableHighlight,
   Text,
-  View
+  View,
 } from 'react-native';
-
+import Icon from 'react-native-vector-icons/Ionicons';
+import Login from './view/regAndLogin/login';
+import TableBarExample from './view/tableExm';
+import CookieManager from 'react-native-cookies';
+import CustomNav from './view/customnav';
+import Global from './tools/Global';
 class ReactStudy extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
-    );
+  constructor(){
+    super();
+    this.state = {
+      pkCode:''
+    }
   }
+
+  componentWillMount(){
+    console.log('will Load');
+    this.state.pkCode = Global.pkCode;
+    console.log('bbb1:'+this.state.pkCode);
+  }
+  _showMainView(){
+    if (this.state.pkCode=='' || this.state.pkCode == 'undefined') {
+      Global.pkCode='ssss';
+      return <CustomNav component={Login}/>;
+    }else{
+      return <TableBarExample/>;
+    }
+  }
+  render() {
+    return this._showMainView();
+  }
+
 }
 
 const styles = StyleSheet.create({
+  container1:{
+    flex:1,
+    backgroundColor: '#FF0'
+  },
+  itemWrapper:{
+    backgroundColor: '#000'
+  },
+  mainContainer:{
+    width: Util.size.width,
+    height: Util.size.height
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#15FCFF',
   },
   welcome: {
     fontSize: 20,
@@ -47,6 +78,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
+  },
+  Btn:{
+    position:"absolute",
+    right:20,bottom:7
+  },
+  backBtnIcon:{
+    color:"#fff"
   },
 });
 

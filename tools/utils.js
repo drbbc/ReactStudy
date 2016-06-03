@@ -1,7 +1,8 @@
 // obtained from react native tutorials
 
-import React,{PixelRatio} from 'react-native';
+import React,{PixelRatio,NativeModules} from 'react-native';
 import Dimensions from 'Dimensions';
+
 
 const Util = {
   ratio: PixelRatio.get(),
@@ -10,25 +11,46 @@ const Util = {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height
   },
-  post(url, data, callback) {
+  post(url, data,empty, callback) {
     const fetchOptions = {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data)
+
     };
 
-    fetch(url, fetchOptions)
-    .then((response) => {
-      return response.json()
-    })
-    .then((responseData) => {
-      callback(responseData);
-    });
+    const Properties =  NativeModules.Properties;
+
+    if (empty) {
+      data = JSON.stringify(data);
+      Properties.encryptParameters({data:data},(error,d)=>{
+        fetchOptions.body = d;
+        console.log(fetchOptions);
+        fetch('http://down.evcoming.com:5141/zdou_app/'+url, fetchOptions)
+        .then((response) => {
+          var outData;
+          console.log(response);
+          if (empty) {
+            var o;
+            Properties.decryptUseDES(response,(error,out)=>{
+              o=out;
+            });
+            return o;
+          }else
+          return response.json()
+        })
+        .then((responseData) => {
+          callback(responseData);
+        });
+      });
+    }
+
+
   },
   key: 'BDKHFSDKJFHSDKFHWEFH-REACT-NATIVE',
+  mainColor:'rgb(102,176,50)',
 };
 
 

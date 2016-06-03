@@ -15,15 +15,23 @@ export default class extends Component  {
 
   render(){
     return (
-      <View style={styles.main}><Text>Demo1</Text></View>
+      <View style={styles.container}>
+      <Text style={styles.tabText}>{this.props.text}</Text>
+      </View>
     )
   }
 
 }
 
 const styles = StyleSheet.create({
-  main:{
-    width:Util.size.width,
-    backgroundColor:'rgb(0,234,210)',
+  container:{
+    backgroundColor:'rgb(255,0,0)',
+    height:Util.size.height,
+    alignItems:'center',
+  },
+
+  tabText:{
+    margin:50,
   }
+
 });
