@@ -11,6 +11,7 @@
 #import "RCTBridgeModule.h"
 
 @interface Properties : NSObject<RCTBridgeModule>
--(NSDictionary *)encryptParameters:(NSDictionary *)parames;
--(NSString *) encryptUseDES:(NSString *)plainText key:(NSString *)key;
+-(NSString *)encryptParameters:(NSString *)parames;
+-(NSString *)encryptUseDES:(NSString *)plainText key:(NSString *)key;
+-(NSDictionary *)decryptUseDES:(NSString *)cipherText key:(NSString *)key;
 @end

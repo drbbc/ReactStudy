@@ -30,7 +30,7 @@ RCT_EXPORT_METHOD(setPkCode:(NSString *)_pkCode){
   pkCode=_pkCode;
 }
 
-RCT_EXPORT_METHOD(encryptParameters:(NSDictionary *)parames callback:(RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(encryptParameters:(NSString *)parames callback:(RCTResponseSenderBlock)callback)
 {
   callback(@[[NSNull null], [self encryptParameters:parames]]);
 }
@@ -40,21 +40,16 @@ RCT_EXPORT_METHOD(decryptUseDES:(NSString *)string callback:(RCTResponseSenderBl
 }
 
 RCT_EXPORT_METHOD(getDeviceId:(RCTResponseSenderBlock)callback){
-  NSLog(@"--------js ");
   callback(@[[NSNull null],[[UIDevice currentDevice] identifierForVendor].UUIDString]);
 }
 
--(NSDictionary *)encryptParameters:(NSDictionary *)parames
+-(NSString *)encryptParameters:(NSString *)parames
 {
-  NSMutableDictionary *outDic = [NSMutableDictionary dictionary];
-  for (id obj in parames) {
-    if ([[parames objectForKey:obj] isKindOfClass:[NSDictionary class]]) {
-      [outDic setObject:[self encryptParameters:[parames objectForKey:obj]] forKey:obj];
-    }else{
-      [outDic setObject:[self encryptUseDES:[parames objectForKey:obj] key:desKey] forKey:obj];
-    }
-  }
-  return outDic;
+  NSString *outString = @"";
+  NSLog(@"native -- %@",parames);
+  outString =[self encryptUseDES:parames key:desKey];
+  NSLog(@"解密后：%@",[self decryptUseDES:outString key:desKey]);
+  return outString;
 }
 
 -(NSString *) encryptUseDES:(NSString *)plainText key:(NSString *)key
@@ -87,6 +82,9 @@ RCT_EXPORT_METHOD(getDeviceId:(RCTResponseSenderBlock)callback){
 {
   const Byte iv[] = {1,2,3,4,5,6,7,8};
   NSDictionary *plaintext = nil;
+  if (cipherText==nil) {
+    return @{};
+  }
   NSData *cipherdata = [[NSData alloc] initWithBase64EncodedString:cipherText options:NSDataBase64DecodingIgnoreUnknownCharacters];
   unsigned char buffer[1024*100];
   memset(buffer, 0, sizeof(char));
