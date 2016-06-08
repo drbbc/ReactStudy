@@ -9,9 +9,9 @@ var {
   View,
 } = ReactNative;
 import Icon from 'react-native-vector-icons/Ionicons';
-import Page1 from './page1';
 import Page2 from './page2';
 import Demo1 from './Demo1';
+import MainView from './myCar/mainView';
 import NavUi from './navigation';
 import CustomNav from './customnav';
 var TabBarExample = React.createClass({
@@ -24,16 +24,16 @@ var TabBarExample = React.createClass({
 
   getInitialState: function() {
     return {
-      selectedTab: 'redTab',
+      selectedTab: 0,
       notifCount: 0,
       presses: 0,
     };
   },
 
   _renderContent: function(color: string, pageText: string, num?: number) {
-    if (this.state.selectedTab=='redTab') {
-      return (<Page1/>);
-    }else if (this.state.selectedTab=='blueTab') {
+    if (this.state.selectedTab==0) {
+      return (<CustomNav component={MainView}/>);
+    }else if (this.state.selectedTab==1) {
       return (<NavUi component={Demo1}/>);
     }else{
       return (<CustomNav component={Page2}/>);
@@ -43,18 +43,18 @@ var TabBarExample = React.createClass({
   render: function() {
     return (
       <TabBarIOS
-        unselectedTintColor='rgb(102,176,50)'
+        unselectedTintColor='red'
         tintColor="rgb(102,176,50)"
         translucent={false}
         barTintColor="#FFFFFF">
         <TabBarIOS.Item
           title="爱车"
-          selected={this.state.selectedTab === 'blueTab'}
+          selected={this.state.selectedTab === 0}
           icon={require('image!tabCar')}
           selectedIcon={require('image!tabCar1')}
           onPress={() => {
             this.setState({
-              selectedTab: 'blueTab',
+              selectedTab: 0,
             });
           }}>
           {this._renderContent('#414A8C', 'Blue Tab')}
@@ -63,22 +63,23 @@ var TabBarExample = React.createClass({
           title="地图"
           selectedIcon={require('image!tabMap1')}
           icon={require('image!tabMap')}
-          selected={this.state.selectedTab === 'redTab'}
+          selected={this.state.selectedTab === 1}
           onPress={() => {
             this.setState({
-              selectedTab: 'redTab'
+              selectedTab: 1
             });
           }}>
           {this._renderContent('#783E33', 'Red Tab', this.state.notifCount)}
         </TabBarIOS.Item>
         <TabBarIOS.Item
+          style={styles.tabItem}
           icon={require('image!tabMy')}
           selectedIcon={require('image!tabMy1')}
           title="我的"
-          selected={this.state.selectedTab === 'greenTab'}
+          selected={this.state.selectedTab === 2}
           onPress={() => {
             this.setState({
-              selectedTab: 'greenTab'
+              selectedTab: 2
             });
           }}>
           {this._renderContent()}
@@ -97,7 +98,9 @@ var styles = StyleSheet.create({
   tabText: {
     color: 'white',
     margin: 50,
-  },
+  },tabItem:{
+    backgroundColor:'red'
+  }
 });
 
 module.exports = TabBarExample;

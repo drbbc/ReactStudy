@@ -1,5 +1,5 @@
 import Icon from './left_icon' ;
-import Util from '../../tools/utils' ;
+import Util from '../tools/utils' ;
 
 import React from 'react';
 import {

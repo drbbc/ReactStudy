@@ -23,7 +23,7 @@ var {
   View
 } = ReactNative;
 
-var Util = require('../tools/utils');
+var Util = require('./tools/utils');
 
 var EmptyPage = React.createClass({
 

@@ -3,7 +3,7 @@
 import React,{Component} from 'react';
 import {StyleSheet,View,Image,Text} from 'react-native';
 
-import Util from '../tools/utils';
+import Util from './tools/utils';
 import NavUi from './navigation';
 import Demo from './Demo1';
 

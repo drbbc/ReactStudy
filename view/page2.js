@@ -6,7 +6,7 @@ import {
   Text,StyleSheet
 } from 'react-native';
 
-import Util from '../tools/utils';
+import Util from './tools/utils';
 import Header from './common/header' ;
 
 export default class extends Component {

@@ -5,7 +5,7 @@
  */
 
 import React, { Component } from 'react';
-import Util from './tools/utils';
+import Util from './view/tools/utils';
 
 import {
   AppRegistry,
@@ -21,9 +21,9 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import Login from './view/regAndLogin/login';
 import TableBarExample from './view/tableExm';
-import CookieManager from 'react-native-cookies';
+// import CookieManager from 'react-native-cookies';
 import CustomNav from './view/customnav';
-import Global from './tools/Global';
+import Global from './view/tools/Global';
 class ReactStudy extends Component {
   constructor(){
     super();
@@ -39,7 +39,7 @@ class ReactStudy extends Component {
   }
   _showMainView(){
     if (this.state.pkCode=='' || this.state.pkCode == 'undefined') {
-      Global.pkCode='ssss';
+      // Global.pkCode='ssss';
       return <CustomNav component={Login}/>;
     }else{
       return <TableBarExample/>;
