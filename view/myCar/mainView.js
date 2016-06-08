@@ -8,6 +8,10 @@ import NavigationBar from 'react-native-navbar';
 import Global from '../tools/Global';
 import Util from '../tools/utils';
 import Swiper from 'react-native-swiper';
+
+import Svg,{
+    Circle,Line
+} from 'react-native-svg';
 //
 export default class MainView extends Component{
   constructor() {
@@ -27,6 +31,8 @@ export default class MainView extends Component{
   }
 
   render(){
+    let cricleHeight = Math.max(Util.size.width/3,140)-10;
+    console.log(cricleHeight);
     return(
       <View style={styles.container}>
         <View style={styles.navigation}>
@@ -45,6 +51,16 @@ export default class MainView extends Component{
           <View style={styles.info1}>
           </View>
           <View style={styles.info2}>
+            <Svg style={{alignSelf:'center'}} width={cricleHeight} height={cricleHeight}>
+              <Circle
+                    cx={cricleHeight/2}
+                    cy={cricleHeight/2}
+                    r={cricleHeight/2-10}
+                    stroke={Util.mainColor}
+                    strokeWidth="10"
+                    fill="white"
+                />
+            </Svg>
           </View>
           <View style={styles.info3}>
           </View>
@@ -93,7 +109,6 @@ const styles = StyleSheet.create({
     backgroundColor:'rgb(123,156,98)',
   },info2:{
     flex:1,
-    backgroundColor:'rgb(223,56,98)',
   },info3:{
     flex:1,
     backgroundColor:'rgb(59,100,130)',
